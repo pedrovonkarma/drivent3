@@ -37,8 +37,15 @@ export function handleApplicationErrors(
       message: err.message,
     });
   }
+
   if (err.name === 'PaymentRequiredError') {
     return res.status(httpStatus.PAYMENT_REQUIRED).send({
+      message: err.message,
+    });
+  }
+
+  if (err.name === 'CannotBookingError') {
+    return res.status(httpStatus.FORBIDDEN).send({
       message: err.message,
     });
   }
@@ -49,4 +56,5 @@ export function handleApplicationErrors(
     error: 'InternalServerError',
     message: 'Internal Server Error',
   });
+  _next();
 }
